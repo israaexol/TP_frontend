@@ -25,6 +25,7 @@ import routes from "routesEtud.js";
 import SidebarEtud from "components/SidebarEtud/SidebarEtud.jsx";
 import image from "assets/img/sidebar-3.jpg";
 import './TableList.css';
+import axios from 'axios';
 
 class TableAbsEtud extends Component {
   constructor(props)
@@ -37,16 +38,16 @@ class TableAbsEtud extends Component {
           hasImage: false,
           fixedClasses: "dropdown show-dropdown open",
             absences : [
-              {
-                id: 1,
-                module: "IGL",
-                date: "11/12/2019"
-              },
-              {
-                id: 2,
-                module: "ORGA",
-                date: "11/12/2019"
-              },
+              // {
+              //   id: 1,
+              //   module: "IGL",
+              //   date: "11/12/2019"
+              // },
+              // {
+              //   id: 2,
+              //   module: "ORGA",
+              //   date: "11/12/2019"
+              // },
 
             ],
             nom : []
@@ -100,6 +101,19 @@ class TableAbsEtud extends Component {
         this.setState({ fixedClasses: "dropdown" });
       }
     };
+    componentDidMount()
+{
+
+    axios.get('http://127.0.0.1:8000/api/abs').then(response=> {
+        this.setState({absences: response.data.data,})
+    }
+        )
+    axios.get('http://127.0.0.1:8000/api/nom').then(response=> {
+        this.setState({nom: response.data.data,})
+        })
+    console.log('le nom')
+    console.log(this.nom)
+}
    
     componentDidUpdate(e) {
       if (
